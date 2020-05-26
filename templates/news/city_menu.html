@@ -1,0 +1,17 @@
+
+{% load static %}
+
+
+{% block citymenu %}
+
+<div class="dropdown">
+            <button type="button" class="btn" role="button"  data-toggle="dropdown" id="choose_city"><h8>Выберите свой город</h8></button>
+            <div class="dropdown-menu" aria-labelledby="choose_city">
+                {% for c in city %}
+                <a class="dropdown-item" href="{% url 'by_regions' c.pk %}">{{ c.name }}</a>
+                {% endfor %}
+            </div>
+
+        </div>
+
+{% endblock %}
