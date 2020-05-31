@@ -80,7 +80,8 @@ class CityNews(models.Model):
 
 class Weather(models.Model):
     published = models.DateTimeField(auto_now_add=True)
-    city = models.ForeignKey(City, verbose_name='город', on_delete=models.CASCADE)
+    city = models.ForeignKey(City, verbose_name='Город', blank=True, default='', related_name='weather_cities',
+                                 on_delete=models.CASCADE)
     day = models.IntegerField(verbose_name='день')
     month = models.IntegerField(verbose_name='месяц')
     year = models.IntegerField(verbose_name='год')

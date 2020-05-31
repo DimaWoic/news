@@ -12,4 +12,5 @@ urlpatterns = [
     path('robots.txt', TemplateView.as_view(template_name="news/robots.txt", content_type='text/plain')),
     path('<int:city_id>', views.by_regions, name='by_regions'),
     path('<int:city_id>/<int:category_id>/', views.by_region_category, name='by_region'),
+    path('weather/<int:city_id>/', views.WeatherToDay.as_view(), name='weather')
 ]

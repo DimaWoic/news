@@ -1,15 +1,14 @@
-from django.shortcuts import render, get_object_or_404
-from .models import News, Category, Messages, City, CityNews
+from django.shortcuts import render
+from .models import News, Category, Messages, City, CityNews, Weather
 from .serializers import NewsSerializer
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from .forms import MessageForm
 from django.core.mail import EmailMessage
 import datetime
-from django.views.decorators.cache import cache_page
 from django.views.generic import TemplateView
 from django.views.generic.list import ListView
+from django.views.generic.detail import DetailView
 
 
 def index(request):
@@ -109,5 +108,15 @@ class ByRegionCategory(ListView):
             .filter(published__date__gte=datetime.datetime.today().date())
         context['category'] = Category.objects.all()
         context['current_city'] = City.objects.get(pk=self.kwargs['city_id'])
+        context['city'] = City.objects.all()
+        return context
+
+
+class WeatherToDay(DetailView):
+    model = Weather
+    template_name = 'news/weather.html'
+
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
         context['city'] = City.objects.all()
         return context

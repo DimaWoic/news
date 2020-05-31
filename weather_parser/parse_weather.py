@@ -1,7 +1,7 @@
 import requests
 import urllib.parse
 from bs4 import BeautifulSoup
-
+from news.models import Weather, City
 
 
 def url_to_list():
@@ -56,14 +56,28 @@ def meteoservice(url):
                  5: 'юго-западный', 6: 'западный', 7: 'северо-западный'}
 
     weather_dict_list = []
+    city_list = []
+    for city in City.objects.all():
+        city_list.append(city.name)
 
     r = requests.get(url).text
     soup = BeautifulSoup(r, 'html.parser')
-    city_name = urllib.parse.unquote(soup.find('town').get('sname'))
+    city_name = urllib.parse.unquote(soup.find('town').get('sname')).lower().replace(' ', '')
+
+    if '+' in city_name:
+        city_name = city_name.replace('+', ' ')
+
+    for city in city_list:
+        if city in city_name:
+            city_name = city
+        elif city_name.lower() == 'анадырь, чукотский автономный округ, россия':
+            city_name = 'анадырь'
+
     town_block = soup.find('town')
     forecasts = town_block.find_all('forecast')
     weather_list = []
-    weather_dict = {'city': city_name, 'weather_list': None}
+    weather_dict = {}
+    weather_dict.fromkeys(city_name)
 
     for forecast in forecasts:
         day = forecast.get('day')
@@ -90,16 +104,167 @@ def meteoservice(url):
                    'precipitation': precipitation, 'pressure_min': pressure_min, 'pressure_max': pressure_max,
                    'wind_min': wind_min, 'wind_max': wind_max, 'wind_direction': wind_direction,
                    'humidity_min': humidity_min,
-                   'humidity_max': humidity_max, 'humidity_min': heat_min, 'humidity_max': heat_max,
+                   'humidity_max': humidity_max, 'heat_min': heat_min, 'heat_max': heat_max,
                    'temperature_min': temperature_min, 'temperature_max': temperature_max}
         weather_list.append(day_one)
-    weather_dict['weather_list'] = weather_list
+    weather_dict[city_name] = weather_list
     return weather_dict
 
 
-url_list = url_to_list()
+def add_weather_to_base(weather_dict):
 
+    city_list = []
+    for city in City.objects.all():
+        city_list.append(str(city).lower().replace(' ', ''))
 
-for url in url_list:
-    w = meteoservice(url)
-    print(w)
+    for city in city_list:
+        if city in weather_dict:
+            for w in weather_dict[city]:
+                new_weather = Weather()
+                if city == 'йошкар-ола':
+                    new_weather.city_id = City.objects.get(name='Йошкар-Ола').pk
+                    new_weather.day = w['day']
+                    new_weather.month = w['month']
+                    new_weather.year = w['year']
+                    new_weather.hour = w['hour']
+                    new_weather.weekday = w['weekday']
+                    new_weather.cloudiness = w['cloudiness']
+                    new_weather.precipitation = w['precipitation']
+                    new_weather.pressure_min = w['pressure_min']
+                    new_weather.pressure_max = w['pressure_max']
+                    new_weather.wind_min = w['wind_min']
+                    new_weather.wind_max = w['wind_max']
+                    new_weather.wind_direction = w['wind_direction']
+                    new_weather.humidity_min = w['humidity_min']
+                    new_weather.humidity_max = w['humidity_max']
+                    new_weather.heat_min = w['heat_min']
+                    new_weather.heat_max = w['heat_max']
+                    new_weather.temperature_min = w['temperature_min']
+                    new_weather.temperature_max = w['temperature_max']
+                    new_weather.save()
+                elif city == 'петропавловск-камчатский':
+                    new_weather.city_id = City.objects.get(name='Петропавловск-Камчатский').pk
+                    new_weather.day = w['day']
+                    new_weather.month = w['month']
+                    new_weather.year = w['year']
+                    new_weather.hour = w['hour']
+                    new_weather.weekday = w['weekday']
+                    new_weather.cloudiness = w['cloudiness']
+                    new_weather.precipitation = w['precipitation']
+                    new_weather.pressure_min = w['pressure_min']
+                    new_weather.pressure_max = w['pressure_max']
+                    new_weather.wind_min = w['wind_min']
+                    new_weather.wind_max = w['wind_max']
+                    new_weather.wind_direction = w['wind_direction']
+                    new_weather.humidity_min = w['humidity_min']
+                    new_weather.humidity_max = w['humidity_max']
+                    new_weather.heat_min = w['heat_min']
+                    new_weather.heat_max = w['heat_max']
+                    new_weather.temperature_min = w['temperature_min']
+                    new_weather.temperature_max = w['temperature_max']
+                    new_weather.save()
+                elif city == 'ростов-на-дону':
+                    new_weather.city_id = City.objects.get(name='Ростов-на-Дону').pk
+                    new_weather.day = w['day']
+                    new_weather.month = w['month']
+                    new_weather.year = w['year']
+                    new_weather.hour = w['hour']
+                    new_weather.weekday = w['weekday']
+                    new_weather.cloudiness = w['cloudiness']
+                    new_weather.precipitation = w['precipitation']
+                    new_weather.pressure_min = w['pressure_min']
+                    new_weather.pressure_max = w['pressure_max']
+                    new_weather.wind_min = w['wind_min']
+                    new_weather.wind_max = w['wind_max']
+                    new_weather.wind_direction = w['wind_direction']
+                    new_weather.humidity_min = w['humidity_min']
+                    new_weather.humidity_max = w['humidity_max']
+                    new_weather.heat_min = w['heat_min']
+                    new_weather.heat_max = w['heat_max']
+                    new_weather.temperature_min = w['temperature_min']
+                    new_weather.temperature_max = w['temperature_max']
+                    new_weather.save()
+                elif city == 'улан-удэ':
+                    new_weather.city_id = City.objects.get(name='Улан-Удэ').pk
+                    new_weather.day = w['day']
+                    new_weather.month = w['month']
+                    new_weather.year = w['year']
+                    new_weather.hour = w['hour']
+                    new_weather.weekday = w['weekday']
+                    new_weather.cloudiness = w['cloudiness']
+                    new_weather.precipitation = w['precipitation']
+                    new_weather.pressure_min = w['pressure_min']
+                    new_weather.pressure_max = w['pressure_max']
+                    new_weather.wind_min = w['wind_min']
+                    new_weather.wind_max = w['wind_max']
+                    new_weather.wind_direction = w['wind_direction']
+                    new_weather.humidity_min = w['humidity_min']
+                    new_weather.humidity_max = w['humidity_max']
+                    new_weather.heat_min = w['heat_min']
+                    new_weather.heat_max = w['heat_max']
+                    new_weather.temperature_min = w['temperature_min']
+                    new_weather.temperature_max = w['temperature_max']
+                    new_weather.save()
+                elif city == 'ханты-мансийск':
+                    new_weather.city_id = City.objects.get(name='Ханты-Мансийск').pk
+                    new_weather.day = w['day']
+                    new_weather.month = w['month']
+                    new_weather.year = w['year']
+                    new_weather.hour = w['hour']
+                    new_weather.weekday = w['weekday']
+                    new_weather.cloudiness = w['cloudiness']
+                    new_weather.precipitation = w['precipitation']
+                    new_weather.pressure_min = w['pressure_min']
+                    new_weather.pressure_max = w['pressure_max']
+                    new_weather.wind_min = w['wind_min']
+                    new_weather.wind_max = w['wind_max']
+                    new_weather.wind_direction = w['wind_direction']
+                    new_weather.humidity_min = w['humidity_min']
+                    new_weather.humidity_max = w['humidity_max']
+                    new_weather.heat_min = w['heat_min']
+                    new_weather.heat_max = w['heat_max']
+                    new_weather.temperature_min = w['temperature_min']
+                    new_weather.temperature_max = w['temperature_max']
+                    new_weather.save()
+                elif city == 'южно-сахалинск':
+                    new_weather.city_id = City.objects.get(name='Южно-Сахалинск').pk
+                    new_weather.day = w['day']
+                    new_weather.month = w['month']
+                    new_weather.year = w['year']
+                    new_weather.hour = w['hour']
+                    new_weather.weekday = w['weekday']
+                    new_weather.cloudiness = w['cloudiness']
+                    new_weather.precipitation = w['precipitation']
+                    new_weather.pressure_min = w['pressure_min']
+                    new_weather.pressure_max = w['pressure_max']
+                    new_weather.wind_min = w['wind_min']
+                    new_weather.wind_max = w['wind_max']
+                    new_weather.wind_direction = w['wind_direction']
+                    new_weather.humidity_min = w['humidity_min']
+                    new_weather.humidity_max = w['humidity_max']
+                    new_weather.heat_min = w['heat_min']
+                    new_weather.heat_max = w['heat_max']
+                    new_weather.temperature_min = w['temperature_min']
+                    new_weather.temperature_max = w['temperature_max']
+                    new_weather.save()
+                else:
+                    new_weather.city_id = City.objects.get(name=city.capitalize()).pk
+                    new_weather.day = w['day']
+                    new_weather.month = w['month']
+                    new_weather.year = w['year']
+                    new_weather.hour = w['hour']
+                    new_weather.weekday = w['weekday']
+                    new_weather.cloudiness = w['cloudiness']
+                    new_weather.precipitation = w['precipitation']
+                    new_weather.pressure_min = w['pressure_min']
+                    new_weather.pressure_max = w['pressure_max']
+                    new_weather.wind_min = w['wind_min']
+                    new_weather.wind_max = w['wind_max']
+                    new_weather.wind_direction = w['wind_direction']
+                    new_weather.humidity_min = w['humidity_min']
+                    new_weather.humidity_max = w['humidity_max']
+                    new_weather.heat_min = w['heat_min']
+                    new_weather.heat_max = w['heat_max']
+                    new_weather.temperature_min = w['temperature_min']
+                    new_weather.temperature_max = w['temperature_max']
+                    new_weather.save()
