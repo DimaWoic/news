@@ -1,2 +1,42 @@
 {% extends "news/layout/base.html" %}
 {% load static %}
+
+
+
+{% block weather %}
+<div class="ml-4" id="weather_w">
+    <div id="weather" class="border rounded border-secondary mb-2">
+        <div id="date_time" class="ml-2 mt-2">
+            <p class="mb-1">{{ weather.3.day }} {{ weather.3.month }}</p>
+            <p class="mb-1 mt-1">{{ weather.3.weekday }}</p>
+            <p>{{ weather.3.hour }}:00</p>
+        </div>
+        <p>
+        {{ weather.3.cloudiness }} {{ weather.3.precipitation }} {{ weather.3.temperature_max }} {{ weather.3.pressure_min }}...{{ weather.3.pressure_max }}мм
+        {{ weather.3.wind_min }}...{{ weather.3.wind_max }} м/с {{ weather.3.wind_direction }}
+    </p>
+    </div>
+
+    <div id="weather" class="border rounded border-secondary mb-2">
+        <p>{{ weather.2.day }} {{ weather.2.month }}  {{ weather.2.weekday }} {{ weather.2.hour }}:00
+        {{ weather.2.cloudiness }} {{ weather.2.precipitation }} {{ weather.2.temperature_max }} {{ weather.2.pressure_min }}...{{ weather.2.pressure_max }}мм
+        {{ weather.2.wind_min }}...{{ weather.2.wind_max }} м/с {{ weather.2.wind_direction }}
+    </p>
+    </div>
+
+    <div id="weather" class="border rounded border-secondary mb-2">
+        <p>{{ weather.1.day }} {{ weather.1.month }} {{ weather.1.weekday }} {{ weather.1.hour }}:00
+        {{ weather.1.cloudiness }} {{ weather.1.precipitation }} {{ weather.1.temperature_max }} {{ weather.1.pressure_min }}...{{ weather.1.pressure_max }}мм
+        {{ weather.1.wind_min }}...{{ weather.1.wind_max }} м/с {{ weather.1.wind_direction }}
+    </p>
+    </div>
+    <div id="weather" class="border rounded border-secondary mb-2">
+        <p>{{ weather.0.day }} {{ weather.0.month }} {{ weather.0.weekday }} {{ weather.0.hour }}:00
+            {{ weather.0.cloudiness }} {{ weather.0.precipitation }} {{ weather.0.temperature_max }} {{ weather.0.pressure_min }}...{{ weather.0.pressure_max }}мм
+            {{ weather.0.wind_min }}...{{ weather.0.wind_max }} м/с {{ weather.0.wind_direction }}
+        </p>
+    </div>
+</div>
+
+{% endblock %}
+

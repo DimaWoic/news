@@ -55,6 +55,8 @@ def meteoservice(url):
     wind_dict = {0: 'северный', 1: 'северо-восточный', 2: 'восточный', 3: 'юго-восточный', 4: 'южный',
                  5: 'юго-западный', 6: 'западный', 7: 'северо-западный'}
 
+    month_dict = {1: 'января', 2: 'февраля', 3: 'марта', 4: 'апреля', 5: 'мая', 6: 'июня', 7: 'июля', 8: 'августа', 9: 'сентября', 10: 'октября', 11: 'ноября', 12: 'декабря'}
+
     weather_dict_list = []
     city_list = []
     for city in City.objects.all():
@@ -81,7 +83,7 @@ def meteoservice(url):
 
     for forecast in forecasts:
         day = forecast.get('day')
-        month = forecast.get('month')
+        month = month_dict[int(forecast.get('month'))]
         year = forecast.get('year')
         hour = forecast.get('hour')
         predict = forecast.get('tod')

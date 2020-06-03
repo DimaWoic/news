@@ -83,7 +83,7 @@ class Weather(models.Model):
     city = models.ForeignKey(City, verbose_name='Город', blank=True, default='', related_name='weather_cities',
                                  on_delete=models.CASCADE)
     day = models.IntegerField(verbose_name='день')
-    month = models.IntegerField(verbose_name='месяц')
+    month = models.CharField(max_length=20, verbose_name='месяц')
     year = models.IntegerField(verbose_name='год')
     hour = models.IntegerField(verbose_name='час')
     weekday = models.CharField(max_length=200, verbose_name='день недели')

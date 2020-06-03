@@ -112,11 +112,8 @@ class ByRegionCategory(ListView):
         return context
 
 
-class WeatherToDay(DetailView):
-    model = Weather
-    template_name = 'news/weather.html'
-
-    def get_context_data(self, *args, **kwargs):
-        context = super().get_context_data(*args, **kwargs)
-        context['city'] = City.objects.all()
-        return context
+def weather_to_day(request, city_id):
+    weather = Weather.objects.all()
+    city = City.objects.all()
+    context = {'weather': weather, 'city': city}
+    return render(request, 'news/weather.html', context)

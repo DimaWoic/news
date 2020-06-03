@@ -234,6 +234,20 @@ a {
         background-color: #344e66;
     }
 
+    #weather {
+        background-color: #344e66;
+        height: 150px;
+    }
+
+    #weather_w {
+        width: 300px;
+    }
+
+    #date_time {
+        float: left;
+    }
+
+
 }
 
 
