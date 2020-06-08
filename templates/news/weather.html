@@ -6,15 +6,34 @@
 {% block weather %}
 <div class="ml-4" id="weather_w">
     <div id="weather" class="border rounded border-secondary mb-2">
-        <div id="date_time" class="ml-2 mt-2">
+        <div id="date_time" class="ml-2 mt-2 mr-1">
             <p class="mb-1">{{ weather.3.day }} {{ weather.3.month }}</p>
             <p class="mb-1 mt-1">{{ weather.3.weekday }}</p>
             <p>{{ weather.3.hour }}:00</p>
         </div>
-        <p>
-        {{ weather.3.cloudiness }} {{ weather.3.precipitation }} {{ weather.3.temperature_max }} {{ weather.3.pressure_min }}...{{ weather.3.pressure_max }}мм
-        {{ weather.3.wind_min }}...{{ weather.3.wind_max }} м/с {{ weather.3.wind_direction }}
-    </p>
+        <div id="weather_details">
+            <div>
+                {% if weather.3.cloudiness == 3 and weather.3.precipitation == 10%}
+                    <p class="mb-1 mt-1">пасмурно без осадков</p>
+                {% elif weather.3.cloudiness == 0 and weather.3.precipitation == 10%}
+                    <p class="mb-1 mt-1">ясно</p>
+                {% elif weather.3.cloudiness == 0 and weather.3.precipitation == 10%}
+                    <p class="mb-1 mt-1">ясно</p>
+                {% endif %}
+            </div>
+            <div id="temperature" class="mb-1 mt-1">
+                <p class="mb-1 mt-1">{{ weather.3.temperature_min }}...{{ weather.3.temperature_max }}</p>
+            </div>
+            <div>
+                <p class="mb-1 mt-1">{{ weather.3.pressure_min }}...{{ weather.3.pressure_max }}мм. рт. ст.</p>
+            </div>
+            <div>
+                <p class="mb-1 mt-1">{{ weather.3.wind_min }}...{{ weather.3.wind_max }} м/с</p>
+            </div>
+            <div>
+                <p class="mb-1 mt-1">ветер: {{ weather.3.wind_direction }}</p>
+            </div>
+        </div>
     </div>
 
     <div id="weather" class="border rounded border-secondary mb-2">

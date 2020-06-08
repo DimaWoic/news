@@ -27,7 +27,7 @@ def add_to_base(img_file, news_parser_rss):
         if p['media'] == None:
             pass
         else:
-           media = '<img src="' + p['media'] + '" height="400px" width="550px" class="border rounded border-secondry">'
+           media = p['media']
 
         news = News.objects.all()
         for n in news:

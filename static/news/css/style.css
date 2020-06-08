@@ -27,8 +27,7 @@
 
     #content_all_news {
 
-    float: left;
-    width: 50%;
+    width: 100%;
 
     }
 
@@ -68,14 +67,8 @@
         }
 
     #media {
-
-    background-color: #344e66;
-
-    }
-
-    #media:hover {
-
-    background-color: #3f5f7c;
+        width: 45%;
+        float: left;
     }
 
     #title_news {
@@ -245,8 +238,18 @@ a {
 
     #date_time {
         float: left;
+        width: 25%;
+        height: 150px;
     }
 
+    #weather_details {
+        float: left;
+        height: 150px;
+    }
+
+    #temperature {
+
+    }
 
 }
 

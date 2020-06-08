@@ -90,8 +90,8 @@ def meteoservice(url):
         temperature_min = forecast.find('temperature').get('min')
         temperature_max = forecast.find('temperature').get('max')
         weekday = weekday_dict[int(forecast.get('weekday'))]
-        cloudiness = cloud_dict[int(forecast.find('phenomena').get('cloudiness'))]
-        precipitation = precipitation_dict[int(forecast.find('phenomena').get('precipitation'))]
+        cloudiness = int(forecast.find('phenomena').get('cloudiness'))
+        precipitation = int(forecast.find('phenomena').get('precipitation'))
         pressure_max = forecast.find('pressure').get('max')
         pressure_min = forecast.find('pressure').get('min')
         wind_min = forecast.find('wind').get('min')
